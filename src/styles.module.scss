@@ -1,0 +1,40 @@
+@import './styles/mixins.scss';
+@import './styles//colors.scss';
+
+.app {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $background-main;
+
+    .content {
+        width: 80%;
+        display: flex;
+        gap: 1.5rem;
+        .preview {
+            @include column;
+            justify-content: center;
+            flex: 1;
+
+            gap: 1rem;
+
+            h3 {
+                margin: 0;
+                font-size: 24px;
+                font-weight: 500;
+                line-height: 32px;
+            }
+
+            p {
+                line-height: 1.75;
+            }
+        }
+        .form {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

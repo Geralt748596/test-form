@@ -1,0 +1,23 @@
+@import '../../styles/mixins.scss';
+
+.input {
+    @include column;
+
+    gap: .5rem;
+
+    label {
+        font-weight: 500;
+    }
+
+    .wrapper {
+        box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
+        border-radius: 4px;
+        padding: .4rem .6rem;
+        input {
+            border: none;
+            background-color: transparent;
+            width: 100%;
+            outline: none;
+        }
+    }
+}
