@@ -12,17 +12,18 @@
         width: 30vw;
         background-color: $white-main;
         overflow: hidden;
-        height: 300px;
+        height: 210px;
     
         @include column;
         justify-content: space-between;
     
-        gap: 1rem;
-    
         padding: 32px 26px;
-        box-shadow: 0 15px 35px 0 $form-shadow-color, 0 5px 15px 0 $form-shadow-color;
+
+        box-shadow: 0 5px 5px 0 $form-shadow-color, 0 2px 5px 0 $form-shadow-color;
     
         border-radius: 8px;
+        transition: box-shadow 0.3s;
+        
     
         .submit {
             background-color: $pearple-main;
@@ -32,8 +33,20 @@
             cursor: pointer;
             width: 100%;
             padding: 1rem 1.2rem;
-            margin-top: 1rem;
             font-size: 16px;
+            transition: background-color .3s;
+            &:hover {
+                background-color: lighten($pearple-main, 5%);
+            }
+
+            &.disabled {
+                pointer-events: none;
+                background-color: lighten($pearple-main, 15%);
+            }
+        }
+
+        &.focused {
+            box-shadow: 0 15px 35px 0 $form-shadow-color, 0 5px 15px 0 $form-shadow-color;
         }
     }
 

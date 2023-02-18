@@ -1,8 +1,9 @@
 import { memo, useCallback, useState } from 'react';
 
 import useForm from '../../hooks/useForm';
-import { handleFakeReauest } from '../../services';
-import { FieldsName, Inputs, NormalizerRecords } from '../../types';
+import { handleFakeReauest, generateDataForRequest } from '../../services';
+import { FieldsName, Inputs } from '../../types';
+import { required, emailValidation, passwordValidation, cn } from '../../utils';
 
 import { Avatar } from '../avatar';
 
@@ -12,59 +13,59 @@ import styles from './styles.module.scss';
 
 const inputsArray = [
     {
-        name: FieldsName.FirstName,
-        type: 'text',
-        required: true,
-        label: 'First name',
+        name: FieldsName.Email,
+        label: 'Email',
         maxLength: 25,
+        rules: [required, emailValidation],
     },
     {
-        name: FieldsName.SecondName,
-        type: 'text',
-        required: true,
-        label: 'Second name',
-        maxLength: 25,
-    },
-    {
-        name: FieldsName.Age,
-        type: 'number',
-        label: 'Age',
-    },
+        name: FieldsName.Password,
+        label: 'Password',
+        maxLength: 22,
+        type: 'password',
+        rules: [passwordValidation],
+    }
 ];
 
-const normalizer: NormalizerRecords = {
-    [FieldsName.Age]: (value: string) => {
-        return value.length < 4
-    },
-}
-
-export const Form = memo(() => {
-
-    const [isSuccess, setIsSuccess] = useState(false);
+export const Form = memo(({ onSuccess }: Props) => {
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const onSumbit = useCallback((inputs: Inputs) => {
-        handleFakeReauest(inputs)
+        setIsLoading(true);
+        handleFakeReauest(generateDataForRequest(inputs))
             .then(() => {
                 setIsSuccess(true);
+                onSuccess();
             });
-    }, [setIsSuccess]);
+    }, [onSuccess]);
 
-    const { handleInputChange, handleSubmit, inputs } = useForm(onSumbit, normalizer);
+    const { handleSubmit, isFormInFocus, inputs } = useForm(inputsArray, onSumbit);
 
     return (
         <div className={styles.wrapper}>
             <Avatar isTurned={isSuccess} />
-            <form className={`${styles.formWrapper} ${isSuccess ? styles.hide : ''}`} onSubmit={handleSubmit}>
-                {inputsArray.map((input) =>
+            <form
+                className={`${styles.formWrapper} ${isSuccess ? styles.hide : ''} ${isFormInFocus ? styles.focused : ''}`}
+                onSubmit={handleSubmit}
+            >
+                {inputsArray.map((input) => {
+                    return (
                         <Input
-                            {...input}
+                            {...inputs[input.name]}
                             key={input.name}
-                            onChange={handleInputChange}
-                            value={inputs[input.name] || ''}
+                            ref={undefined}
                         />
-                    )}
-                <button className={styles.submit} type='submit'>Отправить</button>
+                    )
+                })}
+                <button className={cn(styles.submit, { [styles.disabled]: isLoading })} type='submit'>
+                    {isLoading ? '...' : 'Signup'}
+                </button>
             </form>
         </div>
     )
 });
+
+type Props = {
+    onSuccess: () => void;
+}

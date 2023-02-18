@@ -1,0 +1,40 @@
+@import '../../styles/colors.scss';
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    pointer-events: none;
+
+    .first, .second {
+        position: absolute;
+        left: -50vw;
+        width: 200vw;
+        height: 32px;
+        transform: rotate(-30deg);
+        transform-origin: center center;
+        transition: top 2s;
+    }
+
+    .first {
+        top: 50%;
+        background-color: $green-main;
+    }
+
+    .second {
+        top: 60%;
+        background-color: $pearple-light;
+    }
+
+    &.active {
+        .first {
+            top: 0;
+        }
+        .second {
+            top: 100%;
+        }
+    }
+}

@@ -2,13 +2,16 @@
 @import './styles//colors.scss';
 
 .app {
+    position: relative;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: $background-main;
+    overflow: hidden;
 
     .content {
+        position: relative;
         width: 80%;
         display: flex;
         gap: 1.5rem;
